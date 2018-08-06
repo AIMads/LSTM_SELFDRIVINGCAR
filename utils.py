@@ -4,9 +4,7 @@ import matplotlib.image as mpimg
 
 
 IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS = 66, 200, 3
-INPUT_SHAPE = (3, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS)
-#INPUT_SHAPES = (3, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS)
-
+INPUT_SHAPE = (None, IMAGE_CHANNELS, IMAGE_HEIGHT, IMAGE_WIDTH)
 
 
 def load_image(data_dir, image_file):
@@ -139,10 +137,12 @@ def augument(data_dir, center, left, right, steering_angle, range_x=100, range_y
 
 def batch_generator(data_dir, image_paths, steering_angles, batch_size, is_training):
     """
-    Generate training image give image paths and associated steering angles
+    Generate training image give image paths and associated steering angles, and the number of samples for the sequence
     """
-    images = np.empty([batch_size, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS])
     steers = np.empty(batch_size)
+    #print(len(steers))
+    images = np.empty([3434, batch_size, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS])
+    
     while True:
         i = 0
         for index in np.random.permutation(image_paths.shape[0]):
